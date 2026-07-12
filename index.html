@@ -10,7 +10,7 @@
 </head>
 
 <body>
-  <div>
+  <div class="scene">
     <p class="title">Wafaa</p>
     <div class="flower">
 
@@ -24,9 +24,7 @@
           <div class="flower__leaf flower__leaf--5"></div>
           <div class="flower__leaf flower__leaf--6"></div>
           <div class="flower__leaf flower__leaf--7"></div>
-          <div
-            class="flower__leaf flower__leaf--8 flower__fall-down--blue"
-          ></div>
+          <div class="flower__leaf flower__leaf--8 flower__fall-down--blue"></div>
         </div>
       </div>
 
@@ -40,9 +38,7 @@
           <div class="flower__leaf flower__leaf--5"></div>
           <div class="flower__leaf flower__leaf--6"></div>
           <div class="flower__leaf flower__leaf--7"></div>
-          <div
-            class="flower__leaf flower__leaf--8 flower__fall-down--white"
-          ></div>
+          <div class="flower__leaf flower__leaf--8 flower__fall-down--white"></div>
         </div>
       </div>
 
@@ -60,14 +56,109 @@
         </div>
       </div>
 
-      <!-- <div class="flower__glass"></div> -->
     </div>
   </div>
 
-  <div class="message-container">
+  <!-- Intro Love Letter -->
+  <div class="love-letter">
+    <span class="love-spark love-spark--1">♥</span>
+    <span class="love-spark love-spark--2">♡</span>
+    <span class="love-spark love-spark--3">♥</span>
+    <span class="love-spark love-spark--4">♡</span>
+
+    <div class="envelope">
+      <div class="envelope__back"></div>
+
+      <div class="love-note">
+        <div class="love-note__heart">🤍</div>
+        <h2>My beautiful Wafaa,</h2>
+        <p>
+          You make my world softer, brighter, and more beautiful simply by being in it.
+        </p>
+        <p>I love you more with every passing day.</p>
+        <p class="love-note__signature">Forever yours 🤍</p>
+      </div>
+
+      <div class="envelope__front"></div>
+      <div class="envelope__flap"></div>
+    </div>
+  </div>
+
+ <div class="shake-hint">Shake your phone to reveal the next surprise</div>
+
+ <div class="message-container">
     <p class="message-title">Wafaa, every petal is for you</p>
     <p class="message-subtext">My heart blooms brighter with you. I love you ❤️</p>
   </div>
-</body>
 
+  <script>
+    (function () {
+      const body = document.body;
+      const hint = document.querySelector('.shake-hint');
+      const THRESHOLD = 18;
+      let lastTime = 0;
+      let shakeQueued = false;
+      let secondStageReady = false;
+
+      const startSecondStage = () => {
+        if (!secondStageReady) {
+          shakeQueued = true;
+          return;
+        }
+        if (!body.classList.contains('shake-started')) {
+          body.classList.add('shake-started');
+          if (hint) hint.classList.add('hidden');
+        }
+      };
+
+      const handleShake = (event) => {
+        const now = Date.now();
+        if (now - lastTime < 300) return;
+        lastTime = now;
+
+        const acc = event.accelerationIncludingGravity || event.acceleration;
+        if (!acc) return;
+
+        const magnitude = Math.sqrt((acc.x || 0) ** 2 + (acc.y || 0) ** 2 + (acc.z || 0) ** 2);
+        if (magnitude > THRESHOLD) {
+          startSecondStage();
+        }
+      };
+
+      const onPointerStart = () => startSecondStage();
+
+      const envelope = document.querySelector('.envelope');
+      if (envelope) {
+        envelope.addEventListener('animationend', (e) => {
+          if (e.animationName.includes('slide-up')) {
+            secondStageReady = true;
+            if (shakeQueued) startSecondStage();
+          }
+        });
+      } else {
+        secondStageReady = true;
+      }
+
+      window.addEventListener('click', onPointerStart, { once: true, passive: true });
+      window.addEventListener('touchstart', onPointerStart, { once: true, passive: true });
+
+      if (window.DeviceMotionEvent) {
+        if (typeof DeviceMotionEvent.requestPermission === 'function') {
+          const onFirstTap = () => {
+            DeviceMotionEvent.requestPermission().then((permissionState) => {
+              if (permissionState === 'granted') {
+                window.addEventListener('devicemotion', handleShake, true);
+              }
+            }).catch(() => {
+              window.addEventListener('devicemotion', handleShake, true);
+            });
+          };
+          window.addEventListener('click', onFirstTap, { once: true, passive: true });
+        } else {
+          window.addEventListener('devicemotion', handleShake, true);
+        }
+      }
+    })();
+  </script>
+</body>
 </html>
