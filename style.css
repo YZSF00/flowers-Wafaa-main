@@ -142,14 +142,12 @@ body {
 .f-wrapper--2 .flower__leaf:not(:first-child) {
     width: 3.8vmin;
     height: 10vmin;
-    /* background-image: linear-gradient(to bottom, #ff4d88, #ff1a75, #99004d 99%); */
     background-image: linear-gradient(to bottom, #ffc0cb, #ff99bb, #c71585 99%);
 }
 
 .f-wrapper--3 .flower__leaf:not(:first-child) {
     width: 3.8vmin;
     height: 10vmin;
-    
     background-image: linear-gradient(to bottom, #a64ac9, #5e2d79, #3b1554 99%);
 }
 /* #ff4d4d, #cc0000, #660000 */
@@ -207,8 +205,7 @@ body {
     transform: translateX(-50%);
     width: 5vmin;
     height: 14vmin;
-    background-image: linear-gradient(to bottom, #2a4f86, #163a72, #092a5d 95%, #051a43 99%);
-
+    background-image: linear-gradient(to bottom, #366be7, #1d233e, #183c68 99%);
     clip-path: ellipse(50% 50% at 50% 50%);
     transform-origin: center bottom;
     animation: open-flower 2s var(--flower-start) backwards;
@@ -219,8 +216,8 @@ body {
     height: 12vmin;
     bottom: 3vmin;
     border-radius: 50% 50% 50% 50% / 80% 80% 20% 20%;
-    background-color: #295a94;
-    background-image: radial-gradient(circle at 50% 30%, rgba(148, 198, 255, 0.95), transparent 50%);
+    background-color: #2850aef7;
+    background-image: none;
     animation: open-flowe--middle 1.4s var(--flower-start) backwards;
 }
 
@@ -248,7 +245,7 @@ body {
     transform: translateX(-50%) rotate(70deg);
 }
 
-.flower__leaf--8 {
+.f-wrapper:first-child .flower__leaf--8 {
     width: 13vmin;
     height: 11vmin;
     bottom: 5vmin;
