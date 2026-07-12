@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>Wafaa🤍</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="style.css?v=20" rel="stylesheet" type="text/css">
   <link rel="icon" href="thumbnail.png" type="image/x-icon">
 </head>
 
@@ -92,10 +92,12 @@
     <div class="envelope__flap"></div>
 
     <!-- Visible while envelope is closed -->
-    <div class="swipe-hint">
-      <span class="swipe-hint__arrow">↑</span>
-      <span class="swipe-hint__text">Slide up to open</span>
-    </div>
+    <div id="swipeZone" class="swipe-zone">
+  <div class="swipe-zone__label">
+    <span class="swipe-zone__arrow">↑</span>
+    <span class="swipe-zone__text">Slide up to open</span>
+  </div>
+</div>
 
     <!-- Appears after the message rises -->
     <button id="shakeButton" class="shake-button" type="button">
@@ -124,6 +126,6 @@
   <span class="shake-button__hint">Then shake your phone 🌸</span> -->
 </button>
 
-<script src="script.js"></script>
+<script src="script.js?v=20"></script>
 </body>
 </html>

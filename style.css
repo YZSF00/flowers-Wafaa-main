@@ -1937,3 +1937,215 @@ body.shake-started .message-container {
         }
     }
 }
+
+/* ==================================================
+   MOBILE TOUCH SWIPE FIX
+================================================== */
+
+html,
+body {
+    overscroll-behavior: none;
+}
+
+.love-letter {
+    pointer-events: auto !important;
+    touch-action: none !important;
+}
+
+.envelope {
+    pointer-events: auto !important;
+
+    touch-action: none !important;
+    -ms-touch-action: none;
+
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-drag: none;
+}
+
+.envelope__front,
+.envelope__back,
+.envelope__flap,
+.love-note,
+.swipe-hint {
+    pointer-events: none !important;
+}
+
+.shake-button {
+    touch-action: manipulation !important;
+}
+
+.shake-button.shake-button--visible {
+    pointer-events: auto !important;
+}
+
+/* ==================================================
+   REAL PHONE SWIPE LAYER
+   KEEP THIS AT THE ABSOLUTE BOTTOM
+================================================== */
+
+html,
+body {
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: auto;
+}
+
+.love-letter {
+    pointer-events: auto !important;
+    touch-action: none !important;
+}
+
+.envelope {
+    pointer-events: auto !important;
+    touch-action: none !important;
+
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-touch-callout: none !important;
+}
+
+/*
+ * Full transparent layer over the envelope.
+ * The whole envelope becomes the touch target.
+ */
+.swipe-zone {
+    position: absolute;
+    inset: 0;
+    z-index: 50;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    padding: 0 14px 15px;
+
+    pointer-events: auto !important;
+    touch-action: none !important;
+
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-touch-callout: none !important;
+
+    cursor: grab;
+}
+
+.swipe-zone--disabled,
+.love-letter.is-open .swipe-zone {
+    opacity: 0;
+    visibility: hidden;
+
+    pointer-events: none !important;
+}
+
+.swipe-zone__label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    min-width: 185px;
+    padding: 7px 20px;
+
+    color: #fff5fa;
+    text-align: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(165, 29, 91, 0.96),
+            rgba(103, 25, 91, 0.96)
+        );
+
+    border:
+        1px solid rgba(255, 220, 236, 0.8);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 7px 18px rgba(84, 0, 42, 0.3),
+        0 0 18px rgba(255, 105, 175, 0.35);
+
+    pointer-events: none;
+}
+
+.swipe-zone__arrow {
+    font-size: 1.35rem;
+    line-height: 1;
+
+    animation:
+        real-phone-swipe-arrow
+        1.1s ease-in-out infinite;
+}
+
+.swipe-zone__text {
+    font-family:
+        "GERALDINE PERSONAL USE",
+        cursive;
+
+    font-size: clamp(
+        1.2rem,
+        5.5vw,
+        1.55rem
+    );
+
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.swipe-zone--complete .swipe-zone__label {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(221, 57, 132, 0.98),
+            rgba(118, 35, 123, 0.98)
+        );
+
+    box-shadow:
+        0 7px 18px rgba(84, 0, 42, 0.3),
+        0 0 32px rgba(255, 125, 190, 0.75);
+}
+
+@keyframes real-phone-swipe-arrow {
+    0%,
+    100% {
+        transform: translateY(3px);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+/*
+ * Envelope pieces must not steal the touch.
+ */
+.envelope__front,
+.envelope__back,
+.envelope__flap,
+.love-note,
+.love-spark {
+    pointer-events: none !important;
+}
+
+/*
+ * Shake button becomes touchable only after opening.
+ */
+.shake-button {
+    z-index: 60 !important;
+    touch-action: manipulation !important;
+}
+
+.shake-button.shake-button--visible {
+    pointer-events: auto !important;
+}
+
+@media (max-width: 600px) {
+    .swipe-zone {
+        padding-bottom: 14px;
+    }
+
+    .swipe-zone__label {
+        min-width: 175px;
+        padding: 7px 17px;
+    }
+}
