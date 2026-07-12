@@ -1061,3 +1061,71 @@ body {
         transform: translateX(-50%) scale(0.88);
     }
 }
+
+/* ==================================================
+   MOBILE: FINAL MESSAGE UNDER WAFAA TITLE
+================================================== */
+
+@media (max-width: 600px) {
+
+    /* Main Wafaa title */
+    .title {
+        top: max(2rem, 7dvh);
+    }
+
+    /* Put both messages directly below Wafaa */
+    .message-container {
+        position: fixed;
+        top: 18dvh;
+        bottom: auto;
+        left: 50%;
+        z-index: 30;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.65rem;
+
+        width: min(90vw, 370px);
+        padding: 0 1rem;
+
+        transform:
+            translateX(-50%)
+            translateY(1.5rem)
+            scale(0.9);
+
+        animation:
+            mobile-message-appear 1.2s 12.8s
+            cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .message-title {
+        width: 100%;
+        margin: 0;
+
+        font-size: clamp(2rem, 9.5vw, 2.9rem);
+        line-height: 1.05;
+        letter-spacing: 0.02em;
+        text-align: center;
+    }
+
+    /* Second message directly below the first */
+    .message-subtext {
+        width: min(86vw, 330px);
+        margin: 0;
+
+        font-size: clamp(0.95rem, 4.3vw, 1.1rem);
+        line-height: 1.4;
+        text-align: center;
+
+        color: #f5c1dc;
+        text-shadow:
+            0 0 10px rgba(245, 193, 220, 0.3);
+    }
+
+    /* Keep flower lower so it does not cover the text */
+    .flower {
+        bottom: calc(env(safe-area-inset-bottom) + 2dvh);
+        transform: translateX(-50%) scale(0.95);
+    }
+}
