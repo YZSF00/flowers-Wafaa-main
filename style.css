@@ -6,12 +6,12 @@
     margin: 0;
     box-sizing: border-box;
 }
-/* @font-face {
+@font-face {
     font-family: 'GERALDINE PERSONAL USE';
     src: url('geraldine-personal-use.italic.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
-} */
+}
 body {
     background-image: linear-gradient(to top, #010329, #000005);
     min-height: 100vh;
@@ -367,5 +367,48 @@ body {
     75% {
         transform-origin: center;
         transform: translate(-36vmin, .2vmin) rotateY(-80deg) rotateX(35deg);
+    }
+}
+
+.message-container {
+    position: absolute;
+    left: 50%;
+    bottom: 8%;
+    transform: translate(-50%, 2rem) scale(0.8);
+    width: 100%;
+    max-width: 36rem;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    opacity: 0;
+    animation: message-appear 1.2s ease-out 1s forwards;
+}
+
+.message-title {
+    color: #ffe0f2;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-family: 'GERALDINE PERSONAL USE', cursive;
+    text-shadow: 0 0 18px rgba(255, 224, 242, 0.55);
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.08em;
+}
+
+.message-subtext {
+    color: #f5c1dc;
+    font-size: clamp(1rem, 2.2vw, 1.3rem);
+    line-height: 1.6;
+}
+
+@keyframes message-appear {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 2rem) scale(0.6) rotate(-4deg);
+    }
+    60% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1.05) rotate(2deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1) rotate(0deg);
     }
 }
