@@ -2190,14 +2190,14 @@ body {
         position: absolute;
 
         left: 50%;
-        bottom: max(2.5rem, 5dvh);
+        bottom: max(2rem, 5dvh);
 
         width: 1px;
         height: 1px;
 
         transform:
             translateX(-50%)
-            scale(1.45);
+            scale(1.35);
 
         transform-origin: bottom center;
     }
