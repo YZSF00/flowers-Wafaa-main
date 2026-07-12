@@ -723,10 +723,6 @@ function initializeGiftAnimation() {
                 <span class="shake-button__title">
                     Shake your phone now
                 </span>
-
-                <span class="shake-button__hint">
-                    Or tap here again to continue
-                </span>
             `;
         } catch (error) {
             console.warn(
