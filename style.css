@@ -1327,3 +1327,613 @@ body.shake-started .message-container {
             0 0 45px rgba(255, 110, 185, 0.7);
     }
 }
+
+/* ==================================================
+   SWIPE OPEN → READ LETTER → SHAKE
+   PASTE AT THE VERY END OF STYLE.CSS
+================================================== */
+
+:root {
+    --flower-start: 0s;
+}
+
+
+/* ==================================================
+   KEEP ENVELOPE UNTIL SHAKE OR CLICK
+================================================== */
+
+.love-letter {
+    opacity: 1;
+    visibility: visible;
+    animation: none !important;
+}
+
+
+/* ==================================================
+   ENVELOPE ENTRANCE AND SWIPE
+================================================== */
+
+.envelope {
+    --drag-offset: 0px;
+
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+
+    cursor: grab;
+
+    animation:
+        swipe-envelope-enter 1.1s 0.35s
+        cubic-bezier(0.22, 1, 0.36, 1)
+        forwards !important;
+}
+
+.envelope.entry-finished {
+    bottom: clamp(70px, 10dvh, 110px);
+    opacity: 1;
+
+    animation: none !important;
+
+    transform:
+        translateX(-50%)
+        translateY(var(--drag-offset))
+        scale(1);
+}
+
+.envelope.is-dragging {
+    cursor: grabbing;
+    transition: none;
+}
+
+.envelope.swipe-cancelled {
+    transition:
+        transform 0.35s
+        cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.envelope.ready-to-open {
+    filter:
+        drop-shadow(
+            0 16px 32px rgba(0, 0, 0, 0.4)
+        )
+        drop-shadow(
+            0 0 36px rgba(255, 100, 170, 0.6)
+        );
+}
+
+@keyframes swipe-envelope-enter {
+    0% {
+        bottom: -350px;
+        opacity: 0;
+
+        transform:
+            translateX(-50%)
+            scale(0.82)
+            rotate(-4deg);
+    }
+
+    65% {
+        bottom: clamp(82px, 11dvh, 125px);
+        opacity: 1;
+
+        transform:
+            translateX(-50%)
+            scale(1.03)
+            rotate(2deg);
+    }
+
+    100% {
+        bottom: clamp(70px, 10dvh, 110px);
+        opacity: 1;
+
+        transform:
+            translateX(-50%)
+            scale(1)
+            rotate(0);
+    }
+}
+
+
+/* ==================================================
+   MESSAGE IS HIDDEN INSIDE THE ENVELOPE
+================================================== */
+
+.envelope__flap {
+    z-index: 5;
+    transform: rotateX(0deg);
+    transform-origin: top center;
+
+    animation: none !important;
+}
+
+.love-note {
+    opacity: 0;
+
+    transform:
+        translateX(-50%)
+        translateY(20px);
+
+    animation: none !important;
+}
+
+
+/* ==================================================
+   OPEN AFTER SLIDING UP
+================================================== */
+
+.love-letter.is-open .envelope__flap {
+    animation:
+        swipe-flap-open 0.85s
+        cubic-bezier(0.65, 0, 0.35, 1)
+        forwards !important;
+}
+
+.love-letter.is-open .love-note {
+    animation:
+        swipe-note-rise 1.15s 0.42s
+        cubic-bezier(0.22, 1, 0.36, 1)
+        forwards !important;
+}
+
+@keyframes swipe-flap-open {
+    0% {
+        z-index: 5;
+        transform: rotateX(0deg);
+    }
+
+    49% {
+        z-index: 5;
+    }
+
+    50% {
+        z-index: 2;
+    }
+
+    100% {
+        z-index: 2;
+        transform: rotateX(180deg);
+    }
+}
+
+@keyframes swipe-note-rise {
+    0% {
+        opacity: 0;
+
+        transform:
+            translateX(-50%)
+            translateY(20px)
+            scale(0.96);
+    }
+
+    28% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+
+        transform:
+            translateX(-50%)
+            translateY(-185px)
+            scale(1);
+    }
+}
+
+
+/* ==================================================
+   SWIPE HINT — BEFORE OPENING
+================================================== */
+
+.swipe-hint {
+    position: absolute;
+    left: 50%;
+    bottom: 20px;
+    z-index: 12;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+
+    width: max-content;
+    padding: 7px 18px;
+
+    color: #fff5fa;
+    text-align: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(165, 29, 91, 0.94),
+            rgba(103, 25, 91, 0.94)
+        );
+
+    border:
+        1px solid rgba(255, 220, 236, 0.78);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 7px 18px rgba(84, 0, 42, 0.28),
+        0 0 18px rgba(255, 105, 175, 0.3);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transform:
+        translateX(-50%)
+        translateY(10px);
+
+    animation:
+        show-swipe-hint 0.45s 1.65s
+        forwards;
+}
+
+.swipe-hint__arrow {
+    font-size: 1.4rem;
+    line-height: 1;
+
+    animation:
+        swipe-arrow-move 1.25s
+        ease-in-out infinite;
+}
+
+.swipe-hint__text {
+    font-family:
+        "GERALDINE PERSONAL USE",
+        cursive;
+
+    font-size: clamp(1.2rem, 5vw, 1.55rem);
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.love-letter.is-open .swipe-hint {
+    animation:
+        hide-swipe-hint 0.28s
+        ease forwards !important;
+}
+
+@keyframes show-swipe-hint {
+    to {
+        opacity: 1;
+
+        transform:
+            translateX(-50%)
+            translateY(0);
+    }
+}
+
+@keyframes hide-swipe-hint {
+    to {
+        opacity: 0;
+        visibility: hidden;
+
+        transform:
+            translateX(-50%)
+            translateY(-15px)
+            scale(0.9);
+    }
+}
+
+@keyframes swipe-arrow-move {
+    0%,
+    100% {
+        transform: translateY(3px);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+
+/* ==================================================
+   SHAKE BUTTON — AFTER OPENING
+================================================== */
+
+.shake-button {
+    position: absolute !important;
+
+    top: auto !important;
+    right: auto !important;
+    bottom: 15px !important;
+    left: 50% !important;
+
+    z-index: 14;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+
+    width: calc(100% - 34px);
+    min-height: 60px;
+    padding: 7px 12px;
+
+    color: #fff5fa;
+    text-align: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(173, 31, 94, 0.96),
+            rgba(109, 25, 95, 0.96)
+        );
+
+    border:
+        1px solid rgba(255, 220, 236, 0.8);
+
+    border-radius: 17px;
+
+    box-shadow:
+        0 8px 20px rgba(77, 0, 38, 0.3),
+        0 0 18px rgba(255, 112, 175, 0.32);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transform:
+        translateX(-50%)
+        translateY(10px)
+        scale(0.92);
+
+    transition:
+        opacity 0.45s ease,
+        visibility 0.45s ease,
+        transform 0.45s ease,
+        background 0.4s ease;
+
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.shake-button--visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+
+    transform:
+        translateX(-50%)
+        translateY(0)
+        scale(1);
+
+    animation:
+        envelope-button-breathe 2s
+        ease-in-out infinite !important;
+}
+
+.shake-button--armed {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(213, 50, 123, 0.97),
+            rgba(112, 35, 116, 0.97)
+        );
+
+    animation:
+        envelope-button-breathe 1.4s
+        ease-in-out infinite,
+
+        envelope-button-glow 1.1s
+        ease-in-out infinite alternate !important;
+}
+
+.shake-button__icon {
+    display: block;
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+.shake-button__title {
+    display: block;
+
+    font-family:
+        "GERALDINE PERSONAL USE",
+        cursive;
+
+    font-size: clamp(1.2rem, 5vw, 1.6rem);
+    line-height: 1;
+}
+
+.shake-button__hint {
+    display: block;
+
+    color: #ffd8e9;
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(0.68rem, 2.7vw, 0.8rem);
+    line-height: 1.25;
+}
+
+@keyframes envelope-button-breathe {
+    0%,
+    100% {
+        transform:
+            translateX(-50%)
+            translateY(0)
+            scale(1);
+    }
+
+    50% {
+        transform:
+            translateX(-50%)
+            translateY(-3px)
+            scale(1.02);
+    }
+}
+
+@keyframes envelope-button-glow {
+    from {
+        box-shadow:
+            0 8px 20px rgba(77, 0, 38, 0.3),
+            0 0 12px rgba(255, 112, 175, 0.3);
+    }
+
+    to {
+        box-shadow:
+            0 8px 20px rgba(77, 0, 38, 0.3),
+            0 0 28px rgba(255, 135, 195, 0.7);
+    }
+}
+
+
+/* ==================================================
+   ENVELOPE LEAVES ONLY AFTER SHAKE OR CLICK
+================================================== */
+
+body.envelope-leaving .love-letter {
+    pointer-events: none;
+
+    animation:
+        love-letter-slide-away 0.85s
+        cubic-bezier(0.65, 0, 0.35, 1)
+        forwards !important;
+}
+
+@keyframes love-letter-slide-away {
+    0% {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translateY(100vh)
+            scale(0.92);
+    }
+}
+
+
+/* ==================================================
+   FLOWERS WAIT FOR SHAKE OR CLICK
+================================================== */
+
+.scene {
+    opacity: 0;
+    visibility: hidden;
+
+    animation: none !important;
+}
+
+.flower__leaf,
+.flower__fall-down--white,
+.flower__fall-down--blue,
+.flower__fall-down--purple {
+    animation-play-state: paused !important;
+}
+
+body.shake-started .scene {
+    visibility: visible;
+
+    animation:
+        reveal-flower-scene 0.7s
+        ease-out forwards !important;
+}
+
+body.shake-started .flower__leaf,
+body.shake-started .flower__fall-down--white,
+body.shake-started .flower__fall-down--blue,
+body.shake-started .flower__fall-down--purple {
+    animation-play-state: running !important;
+}
+
+@keyframes reveal-flower-scene {
+    from {
+        opacity: 0;
+        filter: blur(7px);
+        transform: scale(0.94);
+    }
+
+    to {
+        opacity: 1;
+        filter: blur(0);
+        transform: scale(1);
+    }
+}
+
+
+/* Final flower message also waits */
+.message-container {
+    opacity: 0;
+    animation: none !important;
+}
+
+body.shake-started .message-container {
+    animation:
+        message-appear 1.2s 2.3s
+        cubic-bezier(0.22, 1, 0.36, 1)
+        forwards !important;
+}
+
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media (max-width: 600px) {
+    .envelope {
+        width: min(88vw, 360px);
+        height: 220px;
+    }
+
+    .love-note {
+        width: 90%;
+        min-height: 180px;
+        padding: 16px 14px;
+    }
+
+    .love-note h2 {
+        font-size: clamp(1.65rem, 7vw, 2rem);
+    }
+
+    .love-note p {
+        font-size: clamp(0.78rem, 3.5vw, 0.92rem);
+        line-height: 1.4;
+    }
+
+    .swipe-hint {
+        bottom: 15px;
+    }
+
+    .shake-button {
+        bottom: 14px !important;
+        width: calc(100% - 28px);
+        min-height: 58px;
+    }
+
+    @keyframes swipe-note-rise {
+        0% {
+            opacity: 0;
+
+            transform:
+                translateX(-50%)
+                translateY(20px)
+                scale(0.96);
+        }
+
+        28% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 1;
+
+            transform:
+                translateX(-50%)
+                translateY(-165px)
+                scale(1);
+        }
+    }
+}

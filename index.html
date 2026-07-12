@@ -60,40 +60,68 @@
   </div>
 
   <!-- Intro Love Letter -->
-  <div class="love-letter">
-    <span class="love-spark love-spark--1">♥</span>
-    <span class="love-spark love-spark--2">♡</span>
-    <span class="love-spark love-spark--3">♥</span>
-    <span class="love-spark love-spark--4">♡</span>
+  <!-- Intro Love Letter -->
+<div class="love-letter">
+  <span class="love-spark love-spark--1">♥</span>
+  <span class="love-spark love-spark--2">♡</span>
+  <span class="love-spark love-spark--3">♥</span>
+  <span class="love-spark love-spark--4">♡</span>
 
-    <div class="envelope">
-      <div class="envelope__back"></div>
+  <div class="envelope">
+    <div class="envelope__back"></div>
 
-      <div class="love-note">
-        <div class="love-note__heart">🤍</div>
-        <h2>My beautiful Wafaa,</h2>
-        <p>
-          You make my world softer, brighter, and more beautiful simply by being in it.
-        </p>
-        <p>I love you more with every passing day.</p>
-        <p class="love-note__signature">Forever yours 🤍</p>
-      </div>
+    <!-- Hidden until she slides upward -->
+    <div class="love-note">
+      <div class="love-note__heart">🤍</div>
 
-      <div class="envelope__front"></div>
-      <div class="envelope__flap"></div>
+      <h2>My beautiful Wafaa,</h2>
+
+      <p>
+        You make my world softer, brighter, and more beautiful
+        simply by being in it.
+      </p>
+
+      <p>I love you more with every passing day.</p>
+
+      <p class="love-note__signature">
+        Forever yours 🤍
+      </p>
     </div>
+
+    <div class="envelope__front"></div>
+    <div class="envelope__flap"></div>
+
+    <!-- Visible while envelope is closed -->
+    <div class="swipe-hint">
+      <span class="swipe-hint__arrow">↑</span>
+      <span class="swipe-hint__text">Slide up to open</span>
+    </div>
+
+    <!-- Appears after the message rises -->
+    <button id="shakeButton" class="shake-button" type="button">
+      <span class="shake-button__icon">📱</span>
+
+      <span class="shake-button__title">
+        Tap to activate the surprise
+      </span>
+
+      <span class="shake-button__hint">
+        Then shake your phone 🌸
+      </span>
+    </button>
   </div>
+</div>
 
   <div class="message-container">
     <p class="message-title">Wafaa, every petal is for you</p>
     <p class="message-subtext">My heart blooms brighter with you. I love you ❤️</p>
   </div>
 
-  <button id="shakeButton" class="shake-button" type="button">
+  <!-- <button id="shakeButton" class="shake-button" type="button">
   <span class="shake-button__icon">📱</span>
   
   <span class="shake-button__title">Tap to unlock your surprise</span>
-  <span class="shake-button__hint">Then shake your phone 🌸</span>
+  <span class="shake-button__hint">Then shake your phone 🌸</span> -->
 </button>
 
 <script src="script.js"></script>
