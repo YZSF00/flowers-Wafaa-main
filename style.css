@@ -1129,3 +1129,204 @@ body {
         transform: translateX(-50%) scale(0.95);
     }
 }
+
+/* ==================================================
+   IPHONE + ANDROID SHAKE START
+================================================== */
+
+:root {
+    --flower-start: 0s;
+}
+
+/* Hide flowers until the shake is detected */
+.scene {
+    opacity: 0;
+    visibility: hidden;
+    animation: none !important;
+}
+
+/* Reveal flower scene after shaking */
+body.shake-started .scene {
+    visibility: visible;
+    animation: reveal-flower-scene 0.7s ease-out forwards !important;
+}
+
+@keyframes reveal-flower-scene {
+    from {
+        opacity: 0;
+        filter: blur(7px);
+        transform: scale(0.94);
+    }
+
+    to {
+        opacity: 1;
+        filter: blur(0);
+        transform: scale(1);
+    }
+}
+
+
+/* Pause flower animations until shaking */
+.flower__leaf,
+.flower__fall-down--white,
+.flower__fall-down--blue,
+.flower__fall-down--purple {
+    animation-play-state: paused !important;
+}
+
+/* Begin flower animations after shaking */
+body.shake-started .flower__leaf,
+body.shake-started .flower__fall-down--white,
+body.shake-started .flower__fall-down--blue,
+body.shake-started .flower__fall-down--purple {
+    animation-play-state: running !important;
+}
+
+
+/* Hide final message before shaking */
+.message-container {
+    opacity: 0;
+    animation: none !important;
+}
+
+/* Show final message after flowers begin opening */
+body.shake-started .message-container {
+    animation:
+        message-appear 1.2s 2.3s
+        cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
+}
+
+
+/* ==================================================
+   SHAKE BUTTON
+================================================== */
+
+.shake-button {
+    position: fixed;
+    top: 48%;
+    left: 50%;
+    z-index: 1200;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+
+    width: min(86vw, 350px);
+    min-height: 145px;
+    padding: 1.25rem 1.5rem;
+
+    color: #fff2f8;
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(201, 34, 106, 0.96),
+            rgba(99, 27, 94, 0.96)
+        );
+
+    border: 1px solid rgba(255, 220, 236, 0.7);
+    border-radius: 28px;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.5),
+        0 0 32px rgba(255, 76, 159, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.3);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transform:
+        translate(-50%, -42%)
+        scale(0.82);
+
+    transition:
+        opacity 0.5s ease,
+        visibility 0.5s ease,
+        transform 0.5s ease;
+
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.shake-button--visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+
+    transform:
+        translate(-50%, -50%)
+        scale(1);
+
+    animation: shake-button-float 2.3s ease-in-out infinite;
+}
+
+.shake-button--armed {
+    animation:
+        shake-button-float 1.6s ease-in-out infinite,
+        shake-button-glow 1.2s ease-in-out infinite alternate;
+}
+
+.shake-button--finished {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transform:
+        translate(-50%, -65%)
+        scale(0.8);
+}
+
+.shake-button__icon {
+    font-size: 2.2rem;
+    line-height: 1;
+}
+
+.shake-button__title {
+    font-family:
+        "GERALDINE PERSONAL USE",
+        cursive;
+
+    font-size: clamp(1.9rem, 7vw, 2.6rem);
+    line-height: 1.05;
+}
+
+.shake-button__hint {
+    color: #ffd8ea;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+@keyframes shake-button-float {
+    0%,
+    100% {
+        transform:
+            translate(-50%, -50%)
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translate(-50%, -50%)
+            translateY(-8px);
+    }
+}
+
+@keyframes shake-button-glow {
+    from {
+        box-shadow:
+            0 20px 50px rgba(0, 0, 0, 0.5),
+            0 0 20px rgba(255, 76, 159, 0.3);
+    }
+
+    to {
+        box-shadow:
+            0 20px 50px rgba(0, 0, 0, 0.5),
+            0 0 45px rgba(255, 110, 185, 0.7);
+    }
+}
